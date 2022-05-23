@@ -21,17 +21,25 @@ export const App = () => {
     if (!query) {
       return;
     }
+    if (error) {
+      alert('Something went wrong :(');
+      return;
+    }
     imgApiService.query = query;
     setImageArr([]);
     onFetchImage();
-  }, [query]);
+  }, [query, error]);
 
   useEffect(() => {
     if (page === 1) {
       return;
     }
+    if (error) {
+      alert('Something went wrong :(');
+      return;
+    }
     onLoadImage();
-  }, [page]);
+  }, [page, error]);
 
   const onSearch = newQuery => {
     imgApiService.resetPage();
