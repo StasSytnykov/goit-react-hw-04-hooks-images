@@ -22,6 +22,7 @@ export const App = () => {
       return;
     }
     imgApiService.query = query;
+    setImageArr([]);
     onFetchImage();
   }, [query]);
 
@@ -94,7 +95,7 @@ export const App = () => {
   return (
     <>
       <Searchbar onSubmit={onSearch} />
-
+      {isLoading && imageArr.length < 12 && <Loader />}
       {imageArr.length >= 12 && (
         <ImageGallery
           onClickImg={onClickImg}
@@ -104,8 +105,7 @@ export const App = () => {
       )}
 
       {showModal && <Modal onToggleModal={onToggleModal} img={largeImageURL} />}
-
-      {isLoading && <Loader />}
+      {isLoading && imageArr.length > 0 && <Loader />}
 
       {imageArr.length >= 12 && !isLoading && (
         <Button onLoadMore={onLoadMore} />
