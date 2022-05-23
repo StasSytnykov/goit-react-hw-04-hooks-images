@@ -59,9 +59,10 @@ export class App extends Component {
     try {
       const imageArr = await imgApiService.fetchImage();
       this.setState({
-        imageArr: imageArr.map(({ id, webformatURL }) => ({
+        imageArr: imageArr.map(({ id, webformatURL, largeImageURL }) => ({
           id,
           webformatURL,
+          largeImageURL,
         })),
       });
     } catch (error) {
@@ -72,24 +73,30 @@ export class App extends Component {
   };
 
   onLoadImage = async () => {
+    this.setState({ isLoading: true });
+
     try {
       const imageArr = await imgApiService.fetchImage();
       this.setState(prevState => ({
         imageArr: [
           ...prevState.imageArr,
-          ...imageArr.map(({ id, webformatURL }) => ({
+          ...imageArr.map(({ id, webformatURL, largeImageURL }) => ({
             id,
             webformatURL,
+            largeImageURL,
           })),
         ],
       }));
     } catch (error) {
       this.setState({ error });
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
   onLoadMore = () => {
-    this.setState(prevState => ({ page: (prevState.page += 1) }));
+    const nextPage = this.state.page + 1;
+    return this.setState({ page: nextPage });
   };
 
   render() {
