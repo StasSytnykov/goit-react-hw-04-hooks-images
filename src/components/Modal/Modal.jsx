@@ -8,9 +8,6 @@ const modalRoot = document.querySelector('#modal-root');
 export const Modal = ({ img, onToggleModal }) => {
   useEffect(() => {
     window.addEventListener('keydown', onCloseModal);
-  }, []);
-
-  useEffect(() => {
     return () => window.removeEventListener('keydown', onCloseModal);
   }, []);
 
